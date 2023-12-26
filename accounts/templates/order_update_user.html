@@ -1,0 +1,55 @@
+<!-- order_placed.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed</title>
+</head>
+<body>
+    <h1>Order Placed Successfully!</h1>
+
+    <h2>Order Details</h2>
+    <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+    <p><strong>User:</strong> {{ order.user.username }}</p>
+    <p><strong>Shipping Address:</strong></p>
+    <ul>
+        <li><strong>Address Line 1:</strong> {{ order.shipping_address.address_line_1 }}</li>
+        <li><strong>Address Line 2:</strong> {{ order.shipping_address.address_line_2 }}</li>
+        <li><strong>City:</strong> {{ order.shipping_address.city }}</li>
+        <li><strong>State:</strong> {{ order.shipping_address.state }}</li>
+        <li><strong>Zip Code:</strong> {{ order.shipping_address.zip_code }}</li>
+        <li><strong>Country:</strong> {{ order.shipping_address.country }}</li>
+    </ul>
+
+    <h2>Order Items</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Individual Price</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order_item in order.items.all %}
+                <tr>
+                    <td>{{ order_item.product.product_name }}</td>
+                    <td>{{ order_item.quantity }}</td>
+                    <td>${{ order_item.individual_price }}</td>
+                    <td>${{ order_item.total_amount }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+    
+    
+
+
+    <p>Thank you for shopping with us!</p>
+</body>
+</html>

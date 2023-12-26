@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Update</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 20px;
+        }
+
+        h1, h3, h4 {
+            color: #007bff;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Update</h1>
+    <table>
+        <tr>
+            <th>Dear</th>
+            <td>{{ order.user.username }}</td>
+        </tr>
+        <tr>
+            <th>Order ID</th>
+            <td>{{ order.order_id }}</td>
+        </tr>
+        <tr>
+            <th>New Status</th>
+            <td>{{ order.status }}</td>
+        </tr>
+    </table>
+
+
+    <p>Thank you for shopping with us!</p>
+</body>
+</html>

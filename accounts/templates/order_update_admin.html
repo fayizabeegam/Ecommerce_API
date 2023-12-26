@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order !!!</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        h4 {
+            margin-top: 20px;
+        }
+        p {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>New Order !!!</h1>
+    <table>
+        <tr>
+            <th>Dear Admin,</th>
+        </tr>
+        <tr>
+            <td>A new order with ID {{ order.order_id }} has been placed. Here are the order details:</td>
+        </tr>
+    </table>
+
+    <!-- Order Details Table -->
+    <h4>Order Details:</h4>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Individual Price</th>
+            <th>Total Amount</th>
+        </tr>
+        {% for order_item in order.items.all %}
+            <tr>
+                <td>{{ order_item.product.product_name }}</td>
+                <td>{{ order_item.quantity }}</td>
+                <td>${{ order_item.individual_price }}</td>
+                <td>${{ order_item.total_amount }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Shipping Address Table -->
+    <h4>Shipping Address:</h4>
+    <table>
+        <tr>
+            <th>Address Line 1</th>
+            <th>Address Line 2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Country</th>
+        </tr>
+        <tr>
+            <td>{{ order.shipping_address.address_line_1 }}</td>
+            <td>{{ order.shipping_address.address_line_2 }}</td>
+            <td>{{ order.shipping_address.city }}</td>
+            <td>{{ order.shipping_address.state }}</td>
+            <td>{{ order.shipping_address.zip_code }}</td>
+            <td>{{ order.shipping_address.country }}</td>
+        </tr>
+    </table>
+
+    <p>Please log in to the admin panel to view and process the order.</p>
+ 
+    <p>Thank you for shopping with us!</p>
+</body>
+</html>
