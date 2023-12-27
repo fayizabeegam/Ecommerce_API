@@ -1,4 +1,5 @@
 import datetime
+from django.utils import timezone
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 from django.http.response import Http404
@@ -26,6 +27,7 @@ class UserRegisterView(generics.CreateAPIView):
     """
        User can register account
     """
+    permission_classes = [AllowAny]
     serializer_class = UserRegistrationSerializer
 
     def create(self, request, *args, **kwargs):
@@ -38,7 +40,7 @@ class UserRegisterView(generics.CreateAPIView):
        
     def perform_create(self, serializer):
         serializer.save()
-
+    
 
 
 class Login(generics.ListAPIView):
@@ -48,6 +50,8 @@ class Login(generics.ListAPIView):
     """
     permission_classes = [AllowAny]
     serializer_class = LoginSerializer
+    
+    
  
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -61,7 +65,7 @@ class Login(generics.ListAPIView):
                 # Check if the user is active
                 if user_obj.status == 0:
                     if check_password(data["password"], user_obj.password):
-                        user_obj.last_login = datetime.datetime.now()
+                        user_obj.last_login = timezone.now()
                         user_obj.save()
                         refresh_token = RefreshToken.for_user(user_obj)
                         resp = LoginResponseSerializer(instance=user_obj)

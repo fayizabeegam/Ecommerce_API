@@ -31,8 +31,8 @@ def send_registration_email(sender, instance, created, **kwargs):
  
         smtp_server = 'smtp.mailtrap.io'
         smtp_port = 2525
-        smtp_username = '2607a1e4f9cc84'
-        smtp_password = 'c25153aff8e14d'
+        smtp_username = '8cd9abdaa55fbb'
+        smtp_password = '676221d1136c26'
  
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
@@ -57,8 +57,8 @@ def send_registration_email_custom_user(sender, instance, created, **kwargs):
  
         smtp_server = 'smtp.mailtrap.io'
         smtp_port = 2525
-        smtp_username = '2607a1e4f9cc84'
-        smtp_password = 'c25153aff8e14d'
+        smtp_username = '8cd9abdaa55fbb'
+        smtp_password = '676221d1136c26'
  
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
