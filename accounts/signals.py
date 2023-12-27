@@ -13,35 +13,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
  
-@receiver(post_save, sender=User)
-def send_registration_email(sender, instance, created, **kwargs):
-    """
-       sending a registeration notification
-    """
-    if created:  
-        sender_email = "admin@gmail.com" 
-        recipient_email = instance.email
-        subject = "Welcome To Ecommerce Home !!"
-        body = f"Hello {instance.username},\n\nThank you for registering !"
- 
-        msg = MIMEText(body)
-        msg['From'] = sender_email
-        msg['To'] = recipient_email
-        msg['Subject'] = subject
- 
-        smtp_server = 'smtp.mailtrap.io'
-        smtp_port = 2525
-        smtp_username = '8cd9abdaa55fbb'
-        smtp_password = '676221d1136c26'
- 
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()
-        server.login(smtp_username, smtp_password)
-        server.sendmail(sender_email, recipient_email, msg.as_string())
-        server.quit()
- 
- 
- 
+
+
 @receiver(post_save, sender=CustomUser)
 def send_registration_email_custom_user(sender, instance, created, **kwargs):
     if created: 
