@@ -65,7 +65,7 @@ class Login(generics.ListAPIView):
                 # Check if the user is active
                 if user_obj.status == 0:
                     if check_password(data["password"], user_obj.password):
-                        user_obj.last_login = timezone.now()
+                        user_obj.last_login = datetime.datetime.now()
                         user_obj.save()
                         refresh_token = RefreshToken.for_user(user_obj)
                         resp = LoginResponseSerializer(instance=user_obj)
