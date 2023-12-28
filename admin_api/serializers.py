@@ -42,10 +42,7 @@ class CreateProductSerializer(serializers.ModelSerializer):
     """
         Serializer for product
     """
-    # Use CharField instead of ListField for 'categories'
     categories = serializers.CharField(write_only=True)
- 
-    # Use CategorySerializer for 'category_details'
     category_details = CategorySerializer(source='categories', read_only=True, many=True)
  
     class Meta:
@@ -62,16 +59,9 @@ class CreateProductSerializer(serializers.ModelSerializer):
         ]
  
     def create(self, validated_data):
-        # Pop the 'categories' data from validated_data
         categories_data = validated_data.pop('categories', '')
- 
-        # Split the comma-separated values into a list of integers
         category_ids = [int(cat_id.strip()) for cat_id in categories_data.split(',') if cat_id.strip()]
- 
-        # Create the product without assigning 'categories'
         product = Product.objects.create(**validated_data)
- 
-        # Add categories to the created product using set()
         product.categories.set(category_ids)
  
         return product

@@ -254,24 +254,12 @@ class ProductRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
         serializer = ProductSerializer(instance, data=request.data, partial=True)
  
         if serializer.is_valid():
-            # Pop the 'categories' data from validated data
             categories_data = serializer.validated_data.pop('categories', '')
- 
-            # Split the comma-separated values into a list of integers
             category_ids = [int(cat_id.strip()) for cat_id in categories_data.split(',') 
                             if cat_id.strip()]
- 
-
-            # Update categories for the product using set()
             instance.categories.set(category_ids)
-
-            # Save the patched product without assigning 'categories'
             serializer.save()
- 
-            # Retrieve detailed category information
             category_details = CategorySerializer(instance.categories.all(), many=True).data
- 
-            # Add category_details to the response body
             serializer.data['category_details'] = category_details
  
             return Response({
@@ -378,10 +366,8 @@ class SendPromotionalEmailView(APIView):
     permission_classes = [IsAdminUser]
 
     def get(self, request):
-        # Fetch all existing users
         existing_users = CustomUser.objects.all()
- 
-        # Send promotional email to each existing user
+
         for user in existing_users:
             send_promotional_email(sender=None, instance=user, created=False)
  

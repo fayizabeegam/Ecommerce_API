@@ -252,18 +252,14 @@ class OrderUserReviewView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        # Retrieve or create the user's cart
         user_cart, created = Cart.objects.get_or_create(user=request.user)
-
-        # Retrieve the shipping address
         shipping_address = Address.objects.filter(user=request.user).first()
 
         # Check if the cart is empty
         if not user_cart.items.exists():
             return Response({'error': 'Cannot review an order with an empty cart'}, 
                             status=status.HTTP_400_BAD_REQUEST)
-
-        # Serialize the cart items, shipping address, and total price
+        
         cart_items_serializer = CartItemSerializer(user_cart.items.all(), many=True)
         shipping_address_serializer = AddressSerializer(shipping_address)
         total_price = user_cart.total_price
@@ -346,7 +342,6 @@ class OrderPlaceView(generics.CreateAPIView):
 
             shipping_address = get_object_or_404(Address, user=request.user)
 
-            # Check if the cart is empty
             if not user_cart.items.exists():
                 return Response({'error': 'Cannot place an order with an empty cart'}, 
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -375,7 +370,7 @@ class OrderPlaceView(generics.CreateAPIView):
             user_cart.total_price = 0
             user_cart.save()
 
-            # Serialize and return order details using OrderSerializer
+    
             serializer = OrderSerializer(order)
             return Response({'message': 'Order placed successfully!', 'order_details': serializer.data},
                              status=status.HTTP_201_CREATED)

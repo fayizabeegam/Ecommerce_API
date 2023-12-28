@@ -203,15 +203,9 @@ class CartItem(models.Model):
         return f"CartItem #{self.cart_item_id} for {self.product.product_name}by{self.cart.user.username}"
     
     def save(self, *args, ** kwargs):
-        # Calculate individual price based on the product price and quantity
         self.individual_price = self.product.price
- 
-        # Calculate total amount
         self.total_amount = self.individual_price * self.cart_quantity
- 
         super().save(*args, ** kwargs)
- 
-        # Update total price for the entire cart after saving the cart item
         cart_items = self.cart.items.all()
         self.cart.total_price = sum(item.total_amount for item in cart_items)
         self.cart.save()
