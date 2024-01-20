@@ -33,7 +33,10 @@ class CartItemSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = CartItem
-        fields = ['cart_item_id','product', 'cart_quantity', 'individual_price', 'total_amount']
+        fields = ['cart_item_id',
+                  'product', 'cart_quantity', 
+                  'individual_price', 'total_amount'
+                ]
  
 
 
@@ -47,7 +50,10 @@ class CartSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Cart
-        fields = ['cart_id','user', 'created_at', 'items', 'total_price']
+        fields = ['cart_id','user', 
+                  'created_at', 'items', 
+                  'total_price'
+                ]
 
 
 
@@ -106,7 +112,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = OrderItem
-        fields = ['order_item_id','product_name', 'quantity', 'individual_price', 'total_amount', 'order', 'product', 'user']
+        fields = ['order_item_id','product_name', 
+                  'quantity', 'individual_price', 
+                  'total_amount', 'order',
+                    'product', 'user'
+                ]
  
     def get_product_name(self, instance):
         return instance.product.product_name if instance.product else None
